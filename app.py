@@ -200,6 +200,7 @@ def hypothesis_test():
     # Replace with code to generate and save the plot
     plt.hist(simulated_stats, bins=30, alpha=0.5)
     plt.axvline(observed_stat, color="red", label="Observed statistic")
+    plt.axvline(hypothesized_value, color="blue", linestyle=":", label="Hypothesized value")
     plt.xlabel("Simulated statistics")
     plt.ylabel("Frequency")
     plt.legend()
