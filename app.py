@@ -178,17 +178,15 @@ def hypothesis_test():
 
     # TODO 10: Calculate p-value based on test type
     if test_type == ">":
-        # Greater than test: p-value is the proportion of simulated stats greater than or equal to the observed stat
-        p_value = np.mean(simulated_stats >= observed_stat)
+        # Greater than test: p-value is the proportion of simulated stats ≥ observed stat
+        p_value = np.sum(simulated_stats >= observed_stat) / S
     elif test_type == "<":
-        # Less than test: p-value is the proportion of simulated stats less than or equal to the observed stat
-        p_value = np.mean(simulated_stats <= observed_stat)
+        # Less than test: p-value is the proportion of simulated stats ≤ observed stat
+        p_value = np.sum(simulated_stats <= observed_stat) / S
     elif test_type == "!=":
-        # Not equal to test: p-value is the proportion of simulated stats that are different from the observed stat
-        p_value = np.mean(np.abs(simulated_stats - observed_stat) >= np.abs(observed_stat - hypothesized_value))
-    else:
-        # If no valid test type is selected, set p-value to None
-        p_value = None
+        # Not equal to test: p-value is the proportion of simulated stats as extreme as observed stat
+        p_value = np.sum(np.abs(simulated_stats - hypothesized_value) >= np.abs(observed_stat - hypothesized_value)) / S
+
 
     # TODO 11: If p_value is very small (e.g., <= 0.0001), set fun_message to a fun message
     if p_value is not None and p_value <= 0.0001:
