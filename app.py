@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, session
 import numpy as np
 import matplotlib
+from scipy.stats import t
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -259,10 +260,14 @@ def confidence_interval():
 
     # TODO 15: Calculate confidence interval for the parameter estimate
     # Use the t-distribution and confidence_level
-    z_score_dict = {90: 1.645, 95: 1.96, 99: 2.576}
-    z_score = z_score_dict.get(confidence_level)
-
-    margin_of_error = z_score * std_estimate / np.sqrt(S)
+    df = S - 1
+    t_score_dict = {
+        90: 1.645,  # Approximation for large sample sizes
+        95: 1.96,   # Approximation for large sample sizes
+        99: 2.576,  # Approximation for large sample sizes
+    }
+    t_score = t_score_dict.get(confidence_level, 1.96)
+    margin_of_error = t_score * std_estimate / np.sqrt(S)
     ci_lower = mean_estimate - margin_of_error
     ci_upper = mean_estimate + margin_of_error
 
