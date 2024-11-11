@@ -275,18 +275,16 @@ def confidence_interval():
     # Plot the true parameter value
     plot4_path = "static/plot4.png"
     # Write code here to generate and save the plot
-    ci_color = "green" if includes_true else "orange"
-    ci_color = "green" if includes_true else "orange"
+    ci_color = "blue" if includes_true else "orange"
 
     plt.figure(figsize=(8, 4))
     plt.scatter(estimates, np.zeros_like(estimates), color="gray", alpha=0.5, label="Simulated Estimates")
-    plt.axvline(mean_estimate, color="blue", label="Mean Estimate", linewidth=1.5)
-    plt.axvline(ci_lower, color=ci_color, linestyle="--", label="CI Lower Bound", linewidth=1.5)
-    plt.axvline(ci_upper, color=ci_color, linestyle="--", label="CI Upper Bound", linewidth=1.5)
-    plt.axvline(true_param, color="red", linestyle="-", label="True Parameter", linewidth=1.5)
-    plt.xlabel("Parameter Estimates")
-    plt.legend()
-    plt.title(f"Confidence Interval for {parameter} (True Parameter {'Included' if includes_true else 'Not Included'})")
+    plt.axvline(mean_estimate, color="blue", linestyle="-", label="Mean Estimate", linewidth=2)
+    plt.hlines(0, ci_lower, ci_upper, colors=ci_color, linewidth=3, label=f"{confidence_level:.1f}% Confidence Interval")
+    plt.axvline(true_param, color="green", linestyle="--", label="True Slope", linewidth=2)
+    plt.xlabel("Slope Estimate")
+    plt.title(f"{confidence_level:.1f}% Confidence Interval for Slope (Mean Estimate)")
+    plt.legend(loc="upper right")
     plt.savefig(plot4_path)
     plt.close()
     # Return results to template
