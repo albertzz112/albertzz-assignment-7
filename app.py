@@ -275,13 +275,18 @@ def confidence_interval():
     # Plot the true parameter value
     plot4_path = "static/plot4.png"
     # Write code here to generate and save the plot
-    plt.scatter(estimates, np.zeros_like(estimates), color="gray", alpha=0.5)
-    plt.axvline(mean_estimate, color="blue", label="Mean Estimate")
-    plt.axvline(ci_lower, color="green", linestyle="--", label="CI Lower Bound")
-    plt.axvline(ci_upper, color="green", linestyle="--", label="CI Upper Bound")
-    plt.axvline(true_param, color="red", label="True Parameter")
-    plt.xlabel("Estimates")
+    ci_color = "green" if includes_true else "orange"
+    ci_color = "green" if includes_true else "orange"
+
+    plt.figure(figsize=(8, 4))
+    plt.scatter(estimates, np.zeros_like(estimates), color="gray", alpha=0.5, label="Simulated Estimates")
+    plt.axvline(mean_estimate, color="blue", label="Mean Estimate", linewidth=1.5)
+    plt.axvline(ci_lower, color=ci_color, linestyle="--", label="CI Lower Bound", linewidth=1.5)
+    plt.axvline(ci_upper, color=ci_color, linestyle="--", label="CI Upper Bound", linewidth=1.5)
+    plt.axvline(true_param, color="red", linestyle="-", label="True Parameter", linewidth=1.5)
+    plt.xlabel("Parameter Estimates")
     plt.legend()
+    plt.title(f"Confidence Interval for {parameter} (True Parameter {'Included' if includes_true else 'Not Included'})")
     plt.savefig(plot4_path)
     plt.close()
     # Return results to template
